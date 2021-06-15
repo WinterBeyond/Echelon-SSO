@@ -1,0 +1,11 @@
+{
+  "name": "echelon-sso",
+  "version": "1.0.0",
+  "description": "Utility module to easily perform OAuth & API requests to Echelon SSO",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WinterBeyond/Echelon-SSO.git"
+  },
+  "author": "WinterBeyond"
+}
