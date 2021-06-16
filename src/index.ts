@@ -20,9 +20,7 @@ export const GetAccessToken = (clientid: string, code: string, secret: string): 
         axios.post(`${BASE_DOMAIN}/api/v1/oauth/token`, { clientid, code, secret })
         .then((response) => resolve(response.data))
         .catch((error) => {
-            let message = error.message;
-            if (error.response && error.response.data)
-                error.response.data = error.response.data.error;
+            const message = error.response?.data?.error ?? error.message;
             console.error(`[ECHELON SSO] Unable to retrieve access token`, message);
         });
     });
@@ -37,7 +35,7 @@ export const GetAccessToken = (clientid: string, code: string, secret: string): 
  */
 export const GetUserData = (accessToken: string): Promise<UserData> => {
     return new Promise((resolve) => {
-        axios.post(`${BASE_DOMAIN}/api/v1/user`, {}, { headers: { Authorization: accessToken } })
+        axios.get(`${BASE_DOMAIN}/api/v1/user`, { headers: { Authorization: accessToken } })
         .then((response) => {
             const { id, username, robloxID, discordID, verified, require2FA, requireU2F, role } = response.data;
             const suspendedReason = response.data.suspended;
@@ -45,9 +43,7 @@ export const GetUserData = (accessToken: string): Promise<UserData> => {
             resolve({ id, username, robloxID, discordID, verified, require2FA, requireU2F, role, suspended, suspendedReason });
         })
         .catch((error) => {
-            let message = error.message;
-            if (error.response && error.response.data)
-                error.response.data = error.response.data.error;
+            const message = error.response?.data?.error ?? error.message;
             console.error(`[ECHELON SSO] Unable to retrieve user data`, message);
         });
     });
@@ -63,12 +59,10 @@ export const GetUserData = (accessToken: string): Promise<UserData> => {
  */
 export const GetUserPermissions = (accessToken: string): Promise<Permissions> => {
     return new Promise((resolve) => {
-        axios.post(`${BASE_DOMAIN}/api/v1/user/permissions`, {}, { headers: { Authorization: accessToken } })
+        axios.get(`${BASE_DOMAIN}/api/v1/user/permissions`, { headers: { Authorization: accessToken } })
         .then((response) => resolve(response.data))
         .catch((error) => {
-            let message = error.message;
-            if (error.response && error.response.data)
-                error.response.data = error.response.data.error;
+            const message = error.response?.data?.error ?? error.message;
             console.error(`[ECHELON SSO] Unable to retrieve user permissions`, message);
         });
     });
