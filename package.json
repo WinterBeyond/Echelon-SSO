@@ -2,10 +2,24 @@
   "name": "echelon-sso",
   "version": "1.0.0",
   "description": "Utility module to easily perform OAuth & API requests to Echelon SSO",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WinterBeyond/Echelon-SSO.git"
   },
-  "author": "WinterBeyond"
+  "license": "ISC",
+  "author": "WinterBeyond",
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
 }
