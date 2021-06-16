@@ -10,7 +10,8 @@ const { clientid, secret } = process.env;
 SSO.GetAccessToken(clientid, "some-code-from-redirect-uri", secret)
 .then((accessToken) => {
     // Store access token in database for later usage
-});
+})
+.catch((error) => console.error(error));
 ```
 
 Obtaining user data.
@@ -20,7 +21,8 @@ const SSO = require("echelon-sso");
 SSO.GetUserData("user-access-token")
 .then((userdata) => {
     // Do something with userdata
-});
+})
+.catch((error) => console.error(error));
 ```
 
 Obtaining user permissions.
@@ -30,5 +32,6 @@ const SSO = require("echelon-sso");
 SSO.GetUserPermissions("user-access-token")
 .then((permissions) => {
     // Do something with permissions
-});
+})
+.catch((error) => console.error(error));
 ```
