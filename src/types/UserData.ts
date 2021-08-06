@@ -9,6 +9,9 @@ interface UserData {
     role: string;
     suspended: boolean;
     suspendedReason: string;
+    terminated: boolean;
+    selfTerminated?: boolean;
+    deleteDate?: Date;
 }
 
 export default UserData;

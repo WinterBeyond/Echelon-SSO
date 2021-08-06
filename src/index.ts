@@ -16,10 +16,13 @@ const BASE_DOMAIN = "https://sso.echelonservice.net";
  * @returns AccessToken
  */
 export const GetAccessToken = (clientid: string, code: string, secret: string): Promise<AccessToken> => {
-    return new Promise((resolve, reject) => {
-        axios.post(`${BASE_DOMAIN}/api/v1/oauth/token`, { clientid, code, secret })
-        .then((response) => resolve(response.data))
-        .catch((error) => reject(error.response?.data?.error ?? error.message));
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.post(`${BASE_DOMAIN}/api/v1/oauth/token`, { clientid, code, secret });
+            return resolve(response.data);
+        } catch (error) {
+            return reject(error.response?.data?.error ?? error.message);
+        }
     });
 };
 
@@ -31,30 +34,34 @@ export const GetAccessToken = (clientid: string, code: string, secret: string): 
  * @returns UserData
  */
 export const GetUserData = (accessToken: string): Promise<UserData> => {
-    return new Promise((resolve, reject) => {
-        axios.get(`${BASE_DOMAIN}/api/v1/user`, { headers: { Authorization: accessToken } })
-        .then((response) => {
-            const { id, username, robloxID, discordID, verified, require2FA, requireU2F, role } = response.data;
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.get(`${BASE_DOMAIN}/api/v1/user`, { headers: { Authorization: accessToken } });
+            const { id, username, robloxID, discordID, verified, require2FA, requireU2F, role, terminated, selfTerminated, deleteDate } = response.data;
             const suspendedReason = response.data.suspended;
             const suspended = suspendedReason !== "";
-            resolve({ id, username, robloxID, discordID, verified, require2FA, requireU2F, role, suspended, suspendedReason });
-        })
-        .catch((error) => reject(error.response?.data?.error ?? error.message));
+            return resolve({ id, username, robloxID, discordID, verified, require2FA, requireU2F, role, suspended, suspendedReason, terminated, selfTerminated, deleteDate });
+        } catch (error) {
+            return reject(error.response?.data?.error ?? error.message);
+        }
     });
 };
 
 /**
- * Returns global & department permissions
- * depending on what oauth scopes your
- * application has access to.
+ * Returns permission nodes
+ * if oauth scope contains
+ * `view.permissions`
  * 
  * @param accessToken 
  * @returns Permissions
  */
 export const GetUserPermissions = (accessToken: string): Promise<Permissions> => {
-    return new Promise((resolve, reject) => {
-        axios.get(`${BASE_DOMAIN}/api/v1/user/permissions`, { headers: { Authorization: accessToken } })
-        .then((response) => resolve(response.data))
-        .catch((error) => reject(error.response?.data?.error ?? error.message));
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.get(`${BASE_DOMAIN}/api/v1/user/permissions`, { headers: { Authorization: accessToken } });
+            return resolve(response.data);
+        } catch (error) {
+            return reject(error.response?.data?.error ?? error.message);
+        }
     });
 };
