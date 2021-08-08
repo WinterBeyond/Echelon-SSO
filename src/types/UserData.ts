@@ -8,7 +8,7 @@ interface UserData {
     requireU2F: boolean;
     role: string;
     suspended: boolean;
-    suspendedReason: string;
+    suspensionReason: string;
     terminated: boolean;
     selfTerminated?: boolean;
     deleteDate?: Date;

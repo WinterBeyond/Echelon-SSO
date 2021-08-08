@@ -1,6 +1,6 @@
 interface AccessToken {
-    access_token: string;
-    expires_in: Number;
+    accessToken: string;
+    expiresIn: Number;
 }
 
 export default AccessToken;

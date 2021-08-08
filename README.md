@@ -7,31 +7,37 @@ Obtaining an access token.
 const SSO = require("echelon-sso");
 const { clientid, secret } = process.env;
 
-SSO.GetAccessToken(clientid, "some-code-from-redirect-uri", secret)
-.then((accessToken) => {
+try {
+    const accessTokenData = await SSO.GetAccessToken(clientid, "some-code-from-redirect-uri", secret);
+    const accessToken = accessTokenData.accessToken;
+    const expiry = accessTokenData.expiresIn;
     // Store access token in database for later usage
-})
-.catch((error) => console.error(error));
+} catch (error) {
+    console.error(error);
+}
 ```
 
 Obtaining user data.
 ```JS
 const SSO = require("echelon-sso");
 
-SSO.GetUserData("user-access-token")
-.then((userdata) => {
+try {
+    const userData = await SSO.GetUserData("user-access-token");
     // Do something with userdata
-})
-.catch((error) => console.error(error));
+} catch (error) {
+    console.error(error);
+}
 ```
 
 Obtaining user permissions.
 ```JS
 const SSO = require("echelon-sso");
 
-SSO.GetUserPermissions("user-access-token")
-.then((permissions) => {
+try {
+    const permissions = await SSO.GetUserPermissions("user-access-token");
+    const nodes = permissions.nodes;
     // Do something with permissions
-})
-.catch((error) => console.error(error));
+} catch (error) {
+    console.error(error);
+}
 ```
