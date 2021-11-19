@@ -1,5 +1,10 @@
+interface Permission {
+    identifier: string;
+    value: number;
+}
+
 interface Permissions {
-    nodes: Array<string>;
+    permissions: Permission[];
 }
 
 export default Permissions;
