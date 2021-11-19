@@ -1,6 +1,6 @@
 {
   "name": "echelon-sso",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Utility module to easily perform OAuth & API requests to Echelon SSO",
   "main": "lib/index.js",
   "types": "lib/declarations/index.d.ts",
