@@ -19,7 +19,7 @@ export const GetAccessToken = async (clientid: string, code: string, secret: str
     try {
         const response = await axios.post(`${BASE_DOMAIN}/api/v1/oauth/token`, { clientid, code, secret });
         return response.data;
-    } catch (error) {
+    } catch (error: any) {
         throw error.response?.data?.error ?? error.message;
     }
 };
@@ -39,7 +39,7 @@ export const GetUserData = async (accessToken: string): Promise<UserData> => {
         const suspensionReason = response.data.suspended;
         const suspended = suspensionReason !== "";
         return { id, username, robloxID, discordID, verified, require2FA, requireU2F, role, suspended, suspensionReason, terminated, selfTerminated, deleteDate }
-    } catch (error) {
+    } catch (error: any) {
         throw error.response?.data?.error ?? error.message;
     }
 };
@@ -56,7 +56,7 @@ export const GetUserPermissions = async (accessToken: string): Promise<Permissio
     try {
         const response = await axios.get(`${BASE_DOMAIN}/api/v1/user/permissions`, { headers: { Authorization: accessToken } });
         return response.data;
-    } catch (error) {
+    } catch (error: any) {
         throw error.response?.data?.error ?? error.message;
     }
 };
