@@ -4,6 +4,7 @@ import UserData from "./types/UserData";
 import Permissions from "./types/Permissions";
 
 const BASE_DOMAIN = "https://sso.echelonservice.net";
+const USER_AGENT = "Echelon SSO Module";
 
 /**
  * Returns access token for the
@@ -17,7 +18,7 @@ const BASE_DOMAIN = "https://sso.echelonservice.net";
  */
 export const GetAccessToken = async (clientid: string, code: string, secret: string): Promise<AccessToken> => {
     try {
-        const response = await axios.post(`${BASE_DOMAIN}/api/v1/oauth/token`, { clientid, code, secret });
+        const response = await axios.post(`${BASE_DOMAIN}/api/v1/oauth/token`, { clientid, code, secret }, { headers: { "User-Agent": USER_AGENT } });
         return response.data;
     } catch (error: any) {
         throw error.response?.data?.error ?? error.message;
@@ -34,7 +35,7 @@ export const GetAccessToken = async (clientid: string, code: string, secret: str
  */
 export const GetUserData = async (accessToken: string): Promise<UserData> => {
     try {
-        const response = await axios.get(`${BASE_DOMAIN}/api/v1/user`, { headers: { Authorization: accessToken } });
+        const response = await axios.get(`${BASE_DOMAIN}/api/v1/user`, { headers: { Authorization: accessToken, "User-Agent": USER_AGENT } });
         const { id, username, robloxID, discordID, verified, require2FA, requireU2F, role, terminated, selfTerminated, deleteDate } = response.data;
         const suspensionReason = response.data.suspended;
         const suspended = suspensionReason !== "";
@@ -54,7 +55,7 @@ export const GetUserData = async (accessToken: string): Promise<UserData> => {
  */
 export const GetUserPermissions = async (accessToken: string): Promise<Permissions> => {
     try {
-        const response = await axios.get(`${BASE_DOMAIN}/api/v1/user/permissions`, { headers: { Authorization: accessToken } });
+        const response = await axios.get(`${BASE_DOMAIN}/api/v1/user/permissions`, { headers: { Authorization: accessToken, "User-Agent": USER_AGENT } });
         return response.data;
     } catch (error: any) {
         throw error.response?.data?.error ?? error.message;
